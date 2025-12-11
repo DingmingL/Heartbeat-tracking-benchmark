@@ -1,14 +1,9 @@
 import os
 import json
 import time
-import glob
-import random
 import numpy as np
 import torch
 import av
-import re
-import pandas as pd
-import argparse
 from transformers import Qwen3VLForConditionalGeneration, AutoProcessor
 from utils import out_pattern, read_segmented_video_pyav, set_seed, parse_args, read_video_pyav, load_frame_annotations, \
     get_frame_range_for_video, load_prompt, render_prompt, get_target_indices, read_frames_pyav, read_segmented_frames_pyav
@@ -33,7 +28,7 @@ def load_qwen_model(model_id = "Qwen/Qwen3-VL-8B-Instruct", ban_tokens=["<think>
     else:
         return model, processor, None
     
-def infer_one_video(frames, processor, model, task_type, bad_words_ids=None, prompt_name="structured_esv_edv", idx_low=57, idx_high=80, prompt_file="/home/dili10/scripts/vlm_benchmark/prompts.yaml"):
+def infer_one_video(frames, processor, model, task_type, bad_words_ids=None, prompt_name="structured_esv_edv", idx_low=57, idx_high=80, prompt_file="/your/path/to/prompts.yaml"):
     
     if task_type == "video":
 
@@ -106,12 +101,8 @@ def main():
     model_name = model_id.split("/")[-1]
     video_dir = video_path
     annotation_file = annotation_file
-    # save_path = os.path.join(save_path, f"results_{model_name}_{video_type}_{prompt_end}_{task}_random_seed_{seed}.jsonl")
-    # os.makedirs(os.path.dirname(save_path), exist_ok=True)
-    OUT_PAT = out_pattern(prompt_end=prompt_end)
 
-    # all_videos = sorted(glob.glob(os.path.join(video_dir, "*.avi")))
-    # videos = all_videos[:100]
+    OUT_PAT = out_pattern(prompt_end=prompt_end)
 
     # Load annotations
     annotations_df = load_frame_annotations(annotation_file)
@@ -122,7 +113,8 @@ def main():
             .drop_duplicates()
             .tolist()
         )
-
+    
+    # example: chose the first 100 videos for testing
     videos = video_names[:100]
 
     model, processor, bad_words_ids = load_qwen_model(
@@ -159,8 +151,7 @@ def main():
                         frames = read_segmented_video_pyav(container, indices)
 
 
-                    for run_id in range(1):
-                        # set_seed(2025)
+                    for run_id in range(3):
 
                         t0 = time.time()
                         out_text = infer_one_video(
@@ -174,7 +165,7 @@ def main():
                             prompt_name=prompt_name,
                             prompt_file=prompt_file
                         )
-                        #print("Output text:", out_text)
+ 
                         dt = time.time() - t0
 
                         m = OUT_PAT.search(out_text or "")
@@ -226,8 +217,7 @@ def main():
                     elif video_type == "segmented_echo":
                         frames, edv_pos, esv_pos = read_segmented_frames_pyav(container, edv_idx, esv_idx)
 
-                    for run_id in range(1):
-                        # set_seed(2025)
+                    for run_id in range(3):
 
                         t0 = time.time()
                         out_text = infer_one_video(
@@ -272,7 +262,6 @@ def main():
                             "latency_sec": round(dt, 4)
                         }
                         f.write(json.dumps(rec, ensure_ascii=False) + "\n")
-                    # print(f"[{vid_idx:03d}] run {run_id} -> {out_text}  ({dt:.2f}s)")
 
 if __name__ == "__main__":
     main()

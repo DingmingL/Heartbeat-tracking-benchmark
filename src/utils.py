@@ -2,7 +2,6 @@ import os
 import random
 import numpy as np
 import torch
-import av
 import re
 import pandas as pd
 import argparse
@@ -32,7 +31,7 @@ def parse_args():
                         help="Name of the prompt to use from prompts.yaml.")
     parser.add_argument("--task_type", type=str, default="video",
                         help="Type of the task (e.g., video, frame).")
-    parser.add_argument("--prompt_file", type=str, default="/home/dili10/scripts/vlm_benchmark/prompts.yaml",
+    parser.add_argument("--prompt_file", type=str, default="/your/path/to/prompts.yaml",
                         help="Path to the prompt YAML file.")
     return parser.parse_args()
 
@@ -54,8 +53,6 @@ def read_video_pyav(container, indices):
             break
         if i >= start_index and i in indices:
             frames.append(frame)
-
-    # print(f"Frames decoded: {len(frames)} for indices from {start_index} to {end_index}")
     
     return np.stack([x.to_ndarray(format="rgb24") for x in frames])
 
@@ -162,7 +159,7 @@ def get_frame_range_for_video(video_path, annotations_df, total_frames):
     else:
         raise ValueError(f"Warning: EDV or ESV frame not found for {video_name}")
     
-def load_prompt(prompt_name, prompt_file="/home/dili10/scripts/vlm_benchmark/prompts.yaml"):
+def load_prompt(prompt_name, prompt_file="/your/path/to/prompts.yaml"):
     """Load prompt from YAML file."""
     
     with open(prompt_file, "r", encoding="utf-8") as f:

@@ -2,25 +2,31 @@ import os
 import json
 import time
 import glob
+import random
 import numpy as np
 import torch
+import re
 import av
+import pandas as pd
+import argparse
+from transformers import LlavaNextVideoProcessor, LlavaNextVideoForConditionalGeneration
+from utils import set_seed, parse_args, read_video_pyav, read_segmented_video_pyav, \
+    load_frame_annotations, get_frame_range_for_video, load_prompt, render_prompt, \
+    out_pattern, get_target_indices, read_frames_pyav, read_segmented_frames_pyav
 
-from transformers import AutoProcessor, Gemma3nForConditionalGeneration
-from utils import out_pattern, read_segmented_frames_pyav, read_segmented_video_pyav, set_seed, parse_args, load_frame_annotations, get_frame_range_for_video, \
-    load_prompt, render_prompt, read_video_pyav, get_target_indices, read_frames_pyav
 
-    
-def load_gemma_3n_model(model_id = "google/gemma-3n-e4b-it", ban_tokens=None):
+def load_llava_next_video_model(model_id = "llava-hf/LLaVA-NeXT-Video-7B-hf", ban_tokens=None):
 
-    model = Gemma3nForConditionalGeneration.from_pretrained(
+    model = LlavaNextVideoForConditionalGeneration.from_pretrained(
         model_id, 
-        device_map="auto", 
-        dtype=torch.bfloat16,
-        ).eval()
+        dtype=torch.float16, 
+        low_cpu_mem_usage=True,
+        device_map="auto",
+        #use_flash_attention_2=True, 
+    )  # .to(model.device)
 
-    processor = AutoProcessor.from_pretrained(model_id)
-    
+    processor = LlavaNextVideoProcessor.from_pretrained(model_id,use_fast=True)
+
     if ban_tokens is not None:
         ban_ids = [tid for t in ban_tokens
                    if (tid := processor.tokenizer.convert_tokens_to_ids(t)) is not None]
@@ -29,8 +35,8 @@ def load_gemma_3n_model(model_id = "google/gemma-3n-e4b-it", ban_tokens=None):
     else:
         return model, processor, None
     
-def infer_one_video(frames, processor, model, task_type, bad_words_ids=None, prompt_name=None, \
-                    idx_low=57, idx_high=80, prompt_file="/home/dili10/scripts/vlm_benchmark/prompts.yaml"):
+def infer_one_video(frames, processor, model, task_type, bad_words_ids=None, \
+                    prompt_name="structured_esv_edv", idx_low=57, idx_high=80, prompt_file="/your/path/to/prompts.yaml"):
     
     if task_type == "video":
 
@@ -54,30 +60,37 @@ def infer_one_video(frames, processor, model, task_type, bad_words_ids=None, pro
             conv_template = raw_cfg
 
         conversation = render_prompt(conv_template)
-    
-    prompt = processor.apply_chat_template(
-        conversation,
-        add_generation_prompt=True,
-    )
-    
-    with torch.inference_mode():
-        inputs = processor(
-            text=prompt,
-            videos=[frames],
-            return_tensors="pt"
-        ).to(model.device)
 
-        out = model.generate(
-            **inputs, 
-            max_new_tokens=30, 
-            do_sample=True)
+    prompt = processor.apply_chat_template(
+            conversation,
+            add_generation_prompt=True,
+            tokenize=False,
+        )
+
+    inputs = processor(
+        text=prompt,
+        videos=[frames],
+        padding=True,
+        return_tensors="pt",
+    ).to(model.device)
+
+    out = model.generate(
+        **inputs,
+        do_sample=True, 
+        temperature=0.7, 
+        top_p=0.9,
+        max_new_tokens=30,
+    )
 
     start = inputs["input_ids"].shape[1]
-    text = processor.decode(out[0][start:], skip_special_tokens=True).strip()
-    return text
+    text = processor.batch_decode(out[:,start:], skip_special_tokens=True) 
+    out_text = text[0].strip()
+    return out_text
+
 
 
 def main():
+
     set_seed(2025)
     args = parse_args()
     model_id = args.model_id
@@ -85,16 +98,15 @@ def main():
     annotation_file = args.annotation_file
     save_path = args.save_path
     video_type = args.video_type
-    prompt_name = args.prompt_name
     task = args.task_type
+    prompt_name = args.prompt_name
     prompt_file = args.prompt_file
     prompt_end = prompt_name.split('_', 1)[-1]
 
     model_name = model_id.split("/")[-1]
     video_dir = video_path
-    annotation_file = annotation_file
-    # save_path = os.path.join(save_path, f"results_{model_name}_{video_type}_{prompt_end}_{task}_100_runs.jsonl")
-    # os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    annotation_file = annotation_file 
+
     OUT_PAT = out_pattern(prompt_end=prompt_end)
 
     # Load annotations
@@ -106,13 +118,15 @@ def main():
             .drop_duplicates()
             .tolist()
         )
-
+    # example: chose the first 100 videos for testing
     videos = video_names[:100]
 
-    model, processor, bad_words_ids = load_gemma_3n_model(model_id=model_id)
+    model, processor, bad_words_ids = load_llava_next_video_model(model_id=model_id)
 
-    for i in range(10):
+    for i in range(3):
+
         seed = 2020 + i
+
         set_seed(seed)
 
         save_path_file = os.path.join(save_path, f"results_{model_name}_{video_type}_{prompt_end}_{task}_random_seed_{seed}.jsonl")
@@ -133,16 +147,19 @@ def main():
                         idx_low, idx_high, edv_idx, esv_idx, start_idx = 0, max(int(container.streams.video[0].frames), 50), None, None, 0
 
                     NUM = int(idx_high - idx_low) + 1
-                    indices = np.arange(idx_low+start_idx, start_idx+idx_high + 1).astype(int)
-                    
+                    # indices = np.arange(idx_low, idx_high + 1).astype(int)
+                    indices = np.arange(idx_low + start_idx, start_idx + idx_high + 1).astype(int)
+
                     if video_type == "echo":
                         frames = read_video_pyav(container, indices)
                     elif video_type == "segmented_echo":
                         frames = read_segmented_video_pyav(container, indices)
 
+
                     for run_id in range(3):
 
                         t0 = time.time()
+                        # out_text = None
                         out_text = infer_one_video(
                             frames=frames, 
                             processor=processor, 
@@ -154,7 +171,7 @@ def main():
                             prompt_name=prompt_name,
                             prompt_file=prompt_file
                         )
-                        #print("Output text:", out_text)
+
                         dt = time.time() - t0
 
                         m = OUT_PAT.search(out_text or "")
@@ -207,9 +224,9 @@ def main():
                         frames, edv_pos, esv_pos = read_segmented_frames_pyav(container, edv_idx, esv_idx)
 
                     for run_id in range(3):
-                        # set_seed(2025)
 
                         t0 = time.time()
+                        # out_text = None
                         out_text = infer_one_video(
                             frames=frames, 
                             processor=processor, 
@@ -252,7 +269,7 @@ def main():
                             "latency_sec": round(dt, 4)
                         }
                         f.write(json.dumps(rec, ensure_ascii=False) + "\n")
-                    #print(f"[{vid_idx:03d}] run {run_id} -> {out_text}  ({dt:.2f}s)")
+
 
 if __name__ == "__main__":
     main()

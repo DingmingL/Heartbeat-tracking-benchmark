@@ -25,7 +25,7 @@ def load_llava_interleave_model(model_id = "llava-hf/llava-interleave-qwen-7b-hf
         return model, processor, None
     
 def infer_one_video(frames, processor, model, task_type, bad_words_ids=None, \
-                    prompt_name="structured_esv_edv", idx_low=57, idx_high=80, prompt_file="/home/dili10/scripts/vlm_benchmark/prompts.yaml"):
+                    prompt_name="structured_esv_edv", idx_low=57, idx_high=80, prompt_file="/your/path/to/prompts.yaml"):
     
     if task_type == "video":
 
@@ -80,7 +80,6 @@ def infer_one_video(frames, processor, model, task_type, bad_words_ids=None, \
     text = processor.decode(out[0][start:], skip_special_tokens=True).strip()
     return text
 
-# OUT_PAT = re.compile(r"EDV\s*=\s*(-?\d+)\s*,\s*ESV\s*=\s*(-?\d+)", re.IGNORECASE)
 
 def main():
     set_seed(2025)
@@ -147,7 +146,6 @@ def main():
 
 
                     for run_id in range(3):
-                        # set_seed(2025)
 
                         t0 = time.time()
                         out_text = infer_one_video(
@@ -161,7 +159,7 @@ def main():
                             prompt_name=prompt_name,
                             prompt_file=prompt_file
                         )
-                        #print("Output text:", out_text)
+                
                         dt = time.time() - t0
 
                         m = OUT_PAT.search(out_text or "")
@@ -213,8 +211,7 @@ def main():
                     elif video_type == "segmented_echo":
                         frames, edv_pos, esv_pos = read_segmented_frames_pyav(container, edv_idx, esv_idx)
 
-                    for run_id in range(1):
-                        # set_seed(2025)
+                    for run_id in range(3):
 
                         t0 = time.time()
                         out_text = infer_one_video(
