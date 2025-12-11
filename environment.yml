@@ -1,0 +1,40 @@
+name: echo_vlmbenchmark
+channels:
+  - conda-forge
+  - nvidia 
+dependencies:
+  - python=3.11
+  - pip
+  - numpy
+  - pandas
+  - scipy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - jupyterlab
+  - ipykernel
+  - tqdm
+  - pyyaml
+
+  - ffmpeg
+  - av  
+
+  - pip:
+      - torch==2.8.0
+      - torchvision==0.23.0
+      - torchaudio==2.8.0
+      - xformers==0.0.32.post1
+      - flash-attn==2.8.3
+
+      - transformers==4.57.1
+      - accelerate==1.11.0
+      - datasets==2.14.4
+      - huggingface_hub==0.36.0
+      - safetensors==0.6.2
+      - einops==0.8.1
+      - sentencepiece==0.2.1
+      - tokenizers==0.22.1
+      - qwen-vl-utils==0.0.14
+      - openai==2.6.1
+      - decord==0.6.0
+
