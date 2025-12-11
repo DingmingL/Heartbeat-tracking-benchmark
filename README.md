@@ -34,7 +34,7 @@ scripts/    # Codes for result visualization and metrics caluculation
 
 ```bash
 git clone https://github.com/DingmingL/Heartbeat-tracking-benchmark.git
-cd <REPO_NAME>
+cd Heartbeat-tracking-benchmark/
 ```
 ### 3.2 Create environment
 
