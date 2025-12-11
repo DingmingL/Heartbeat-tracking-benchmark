@@ -1,0 +1,186 @@
+structured_edv_esv:
+  conversation:
+    - role: system
+      content: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Only use these {{NUM}} frames.
+            Find the frame indices of EDV (largest Left Ventricle cavity) and ESV (smallest Left Ventricle cavity) from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Reply exactly as: Frame: EDV=<int>, ESV=<int>.
+
+structured_esv_edv:
+  conversation:
+    - role: system
+      content: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Only use these {{NUM}} frames.
+            Find the frame indices of ESV (smallest Left Ventricle cavity) and EDV (largest Left Ventricle cavity) from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Reply exactly as: Frame: ESV=<int>, EDV=<int>.
+
+structured_esv:
+  conversation:
+    - role: system
+      content: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Only use these {{NUM}} frames.
+            Find the frame indices of ESV (smallest Left Ventricle cavity) from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Reply exactly as: Frame: ESV=<int>.
+
+structured_edv:
+  conversation:
+    - role: system
+      content: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Only use these {{NUM}} frames.
+            Find the frame indices of EDV (largest Left Ventricle cavity) from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Reply exactly as: Frame: EDV=<int>.
+
+
+interleave_edv_esv:
+  conversation:
+    - role: system
+      content:
+        - type: text
+          text: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Only use these {{NUM}} frames.
+            Find the frame indices of EDV (largest Left Ventricle cavity) and ESV (smallest Left Ventricle cavity) from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Reply exactly as: Frame: EDV=<int>, ESV=<int>.
+
+
+interleave_esv_edv:
+  conversation:
+    - role: system
+      content:
+        - type: text
+          text: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Only use these {{NUM}} frames.
+            Find the frame indices of ESV (smallest Left Ventricle cavity) and EDV (largest Left Ventricle cavity) from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Reply exactly as: Frame: ESV=<int>, EDV=<int>.
+
+
+interleave_edv:
+  conversation:
+    - role: system
+      content:
+        - type: text
+          text: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Only use these {{NUM}} frames.
+            Find the frame indices of EDV (largest Left Ventricle cavity) and from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Reply exactly as: Frame: EDV=<int>.
+
+
+interleave_esv:
+  conversation:
+    - role: system
+      content:
+        - type: text
+          text: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Only use these {{NUM}} frames.
+            Find the frame indices of ESV (smallest Left Ventricle cavity) from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Reply exactly as: Frame: ESV=<int>.
+
+
+gemma_esv_edv:
+  conversation:
+    - role: system
+      content: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Only use these {{NUM}} frames.
+            Find the frame indices of ESV (smallest Left Ventricle cavity) and EDV (largest Left Ventricle cavity) from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Reply exactly as: Frame: ESV=<int>, EDV=<int>.
+            You must not say things like 'Okay' or explain what you are doing.Output only one line in this exact format:
+            Frame: ESV=<int>, EDV=<int>. Do not say anything else.
+
+gemma_edv_esv:
+  conversation:
+    - role: system
+      content: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Only use these {{NUM}} frames.
+            Find the frame indices of EDV (largest Left Ventricle cavity) and ESV (smallest Left Ventricle cavity) from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Reply exactly as: Frame: EDV=<int>, ESV=<int>.
+            You must not say things like 'Okay' or explain what you are doing.Output only one line in this exact format:
+            Frame: EDV=<int>, ESV=<int>. Do not say anything else.
+
+gemma_esv:
+  conversation:
+    - role: system
+      content: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Only use these {{NUM}} frames.
+            Find the frame indices of ESV (smallest Left Ventricle cavity) from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Reply exactly as: Frame: ESV=<int>.
+            You must not say things like 'Okay' or explain what you are doing.Output only one line in this exact format:
+            Frame: ESV=<int>. Do not say anything else.
+
+gemma_edv:
+  conversation:
+    - role: system
+      content: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Only use these {{NUM}} frames.
+            Find the frame indices of EDV (largest Left Ventricle cavity) from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Reply exactly as: Frame: EDV=<int>.
+            You must not say things like 'Okay' or explain what you are doing.Output only one line in this exact format:
+            Frame: EDV=<int>. Do not say anything else.
+
+

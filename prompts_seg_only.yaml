@@ -1,0 +1,206 @@
+structured_edv_esv:
+  conversation:
+    - role: system
+      content: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Ignore all background details, anatomy, or medical context.
+            Focus on the red region drawn on top of the images.
+            Identify the index of the frame with the LARGEST and SMALLEST red area from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Only use these {{NUM}} frames. 
+            Reply exactly as: Frame: LARGEST_AREA_INDEX=<int>, SMALLEST_AREA_INDEX=<int>.
+
+structured_esv_edv:
+  conversation:
+    - role: system
+      content: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Ignore all background details, anatomy, or medical context.
+            Focus on the red region drawn on top of the images.
+            Identify the index of the frame with the SMALLEST and LARGEST red area from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Only use these {{NUM}} frames. 
+            Reply exactly as: Frame: SMALLEST_AREA_INDEX=<int>, LARGEST_AREA_INDEX=<int>.
+
+structured_esv:
+  conversation:
+    - role: system
+      content: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Ignore all background details, anatomy, or medical context.
+            Focus on the red region drawn on top of the images.
+            Identify the index of the frame with the SMALLEST red area from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Only use these {{NUM}} frames. 
+            Reply exactly as: Frame: SMALLEST_AREA_INDEX=<int>.
+
+structured_edv:
+  conversation:
+    - role: system
+      content: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Ignore all background details, anatomy, or medical context.
+            Focus on the red region drawn on top of the images.
+            Identify the index of the frame with the LARGEST red area from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Only use these {{NUM}} frames. 
+            Reply exactly as: Frame: LARGEST_AREA_INDEX=<int>.
+
+
+interleave_edv_esv:
+  conversation:
+    - role: system
+      content:
+        - type: text
+          text: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Ignore all background details, anatomy, or medical context.
+            Focus on the red region drawn on top of the images.
+            Identify the index of the frame with the LARGEST and SMALLEST red area from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Only use these {{NUM}} frames. 
+            Reply exactly as: Frame: LARGEST_AREA_INDEX=<int>, SMALLEST_AREA_INDEX=<int>.
+
+
+interleave_esv_edv:
+  conversation:
+    - role: system
+      content:
+        - type: text
+          text: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Ignore all background details, anatomy, or medical context.
+            Focus on the red region drawn on top of the images.
+            Identify the index of the frame with the SMALLEST and LARGEST red area from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Only use these {{NUM}} frames. 
+            Reply exactly as: Frame: SMALLEST_AREA_INDEX=<int>, LARGEST_AREA_INDEX=<int>.
+
+
+interleave_edv:
+  conversation:
+    - role: system
+      content:
+        - type: text
+          text: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Ignore all background details, anatomy, or medical context.
+            Focus on the red region drawn on top of the images.
+            Identify the index of the frame with the LARGEST red area from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Only use these {{NUM}} frames. 
+            Reply exactly as: Frame: LARGEST_AREA_INDEX=<int>.
+
+
+interleave_esv:
+  conversation:
+    - role: system
+      content:
+        - type: text
+          text: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Ignore all background details, anatomy, or medical context.
+            Focus on the red region drawn on top of the images.
+            Identify the index of the frame with the SMALLEST red area from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Only use these {{NUM}} frames. 
+            Reply exactly as: Frame: SMALLEST_AREA_INDEX=<int>.
+
+
+gemma_esv_edv:
+  conversation:
+    - role: system
+      content: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Ignore all background details, anatomy, or medical context.
+            Focus on the red region drawn on top of the images.
+            Identify the index of the frame with the SMALLEST and LARGEST red area from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Only use these {{NUM}} frames. 
+            Reply exactly as: Frame: SMALLEST_AREA_INDEX=<int>, LARGEST_AREA_INDEX=<int>.
+
+gemma_edv_esv:
+  conversation:
+    - role: system
+      content: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Ignore all background details, anatomy, or medical context.
+            Focus on the red region drawn on top of the images.
+            Identify the index of the frame with the LARGEST and SMALLEST red area from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Only use these {{NUM}} frames. 
+            Reply exactly as: Frame: LARGEST_AREA_INDEX=<int>, SMALLEST_AREA_INDEX=<int>.
+            You must not say things like 'Okay' or explain what you are doing.Output only one line in this exact format:
+            Frame: LARGEST_AREA_INDEX=<int>, SMALLEST_AREA_INDEX=<int>. Do not say anything else.
+
+gemma_esv:
+  conversation:
+    - role: system
+      content: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Ignore all background details, anatomy, or medical context.
+            Focus on the red region drawn on top of the images.
+            Identify the index of the frame with the SMALLEST red area from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Only use these {{NUM}} frames. 
+            Reply exactly as: Frame: SMALLEST_AREA_INDEX=<int>.
+            You must not say things like 'Okay' or explain what you are doing.Output only one line in this exact format:
+            Frame: SMALLEST_AREA_INDEX=<int>. Do not say anything else.
+
+gemma_edv:
+  conversation:
+    - role: system
+      content: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            I sampled exactly {{NUM}} frames from the video. Ignore all background details, anatomy, or medical context.
+            Focus on the red region drawn on top of the images.
+            Identify the index of the frame with the LARGEST red area from input frames indexing ranging in [{{idx_low}}, {{idx_high}}].
+            Only use these {{NUM}} frames. 
+            Reply exactly as: Frame: LARGEST_AREA_INDEX=<int>.
+
+

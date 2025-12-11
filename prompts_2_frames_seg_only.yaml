@@ -1,0 +1,176 @@
+llava_edv:
+  conversation:
+    - role: system
+      content: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is 1.
+            Both images contain a red overlay region. 
+
+            Your Task:
+            1. Compare the total area of the red region in Image 0 vs Image 1.
+            2. Determine which image has the LARGEST red area.
+          
+            Output Requirements:
+            Do not provide reasoning. Output exactly one line in the format: LARGEST_AREA_INDEX=<0 or 1>
+
+
+llava_esv:
+  conversation:
+    - role: system
+      content: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is 1.
+            Both images contain a red overlay region. 
+
+            Your Task:
+            1. Compare the total area of the red region in Image 0 vs Image 1.
+            2. Determine which image has the SMALLEST red area.
+          
+            Output Requirements:
+            Do not provide reasoning. Output exactly one line in the format: SMALLEST_AREA_INDEX=<0 or 1>
+
+
+
+interleave_edv:
+  conversation:
+    - role: system
+      content:
+        - type: text
+          text: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: text
+          text: |
+            You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is 1.
+            Both images contain a red overlay region. 
+
+            Your Task:
+            1. Compare the total area of the red region in Image 0 vs Image 1.
+            2. Determine which image has the LARGEST red area.
+          
+            Output Requirements:
+            Do not provide reasoning. Output exactly one line in the format: LARGEST_AREA_INDEX=<0 or 1>
+
+
+interleave_esv:
+  conversation:
+    - role: system
+      content:
+        - type: text
+          text: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: text
+          text: |
+            You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is 1.
+            Both images contain a red overlay region. 
+
+            Your Task:
+            1. Compare the total area of the red region in Image 0 vs Image 1.
+            2. Determine which image has the SMALLEST red area.
+          
+            Output Requirements:
+            Do not provide reasoning. Output exactly one line in the format: SMALLEST_AREA_INDEX=<0 or 1>
+
+gemma_esv:
+  conversation:
+    - role: system
+      content: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is 1.
+            Both images contain a red overlay region. 
+
+            Your Task:
+            1. Compare the total area of the red region in Image 0 vs Image 1.
+            2. Determine which image has the SMALLEST red area.
+          
+            Output Requirements:
+            Do not provide reasoning. Output exactly one line in the format: SMALLEST_AREA_INDEX=<0 or 1>
+            Do not output any explanations, extra words, or a second line.
+
+gemma_edv:
+  conversation:
+    - role: system
+      content: "You are a video analysis expert. Analyze only the provided frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is 1.
+            Both images contain a red overlay region. 
+
+            Your Task:
+            1. Compare the total area of the red region in Image 0 vs Image 1.
+            2. Determine which image has the LARGEST red area.
+          
+            Output Requirements:
+            Do not provide reasoning. Output exactly one line in the format: LARGEST_AREA_INDEX=<0 or 1>
+            Do not output any explanations, extra words, or a second line.
+
+
+
+qwen_edv:
+  - role: system
+    content:
+      - type: text
+        text: >
+          You are a video analysis expert. Analyze only the provided frames.
+          Think silently and do not reveal your reasoning.
+  - role: user
+    content:
+      - type: text
+        text: >
+          You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is 1.
+            Both images contain a red overlay region. 
+
+            Your Task:
+            1. Compare the total area of the red region in Image 0 vs Image 1.
+            2. Determine which image has the LARGEST red area.
+          
+            Output Requirements:
+            Do not provide reasoning. Output exactly one line in the format: LARGEST_AREA_INDEX=<0 or 1>
+      - type: image
+      - type: image
+
+qwen_esv:
+  - role: system
+    content:
+      - type: text
+        text: >
+          You are a video analysis expert. Analyze only the provided frames.
+          Think silently and do not reveal your reasoning.
+  - role: user
+    content:
+      - type: text
+        text: >
+          You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is 1.
+            Both images contain a red overlay region. 
+
+            Your Task:
+            1. Compare the total area of the red region in Image 0 vs Image 1.
+            2. Determine which image has the SMALLEST red area.
+          
+            Output Requirements:
+            Do not provide reasoning. Output exactly one line in the format: SMALLEST_AREA_INDEX=<0 or 1>
+      - type: image
+      - type: image
+

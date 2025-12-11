@@ -1,0 +1,194 @@
+llava_edv:
+  conversation:
+    - role: system
+      content: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is 1.
+            The order of the frames is arbitrary and does NOT indicate which one is EDV or ESV. 
+            Exactly one frame is EDV (largest Left Ventricle cavity) and the other is ESV (smallest Left Ventricle cavity). 
+            Only use these 2 frames. 
+            Decide which frame is EDV, that shows the largest Left Ventricle cavity. 
+            Reply exactly as: EDV=<int>.
+
+            Output requirements: 
+            Use only indices 0 and 1.
+            Output exactly one line. Output format must be exactly: EDV=<int>
+            Do not output any explanations, extra words, or a second line.
+
+
+llava_esv:
+  conversation:
+    - role: system
+      content: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is 1.
+            The order of the frames is arbitrary and does NOT indicate which one is EDV or ESV. 
+            Exactly one frame is EDV (largest Left Ventricle cavity) and the other is ESV (smallest Left Ventricle cavity). 
+            Only use these 2 frames. 
+            Decide which frame is ESV, that shows the smallest Left Ventricle cavity. 
+            Reply exactly as: ESV=<int>.
+
+            Output requirements: 
+            Use only indices 0 and 1.
+            Output exactly one line. Output format must be exactly: ESV=<int>
+            Do not output any explanations, extra words, or a second line.
+
+
+
+interleave_edv:
+  conversation:
+    - role: system
+      content:
+        - type: text
+          text: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: text
+          text: |
+            You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is 1.
+            The order of the frames is arbitrary and does NOT indicate which one is EDV or ESV. 
+            Exactly one frame is EDV (largest Left Ventricle cavity) and the other is ESV (smallest Left Ventricle cavity). 
+            Only use these 2 frames. 
+            Decide which frame is EDV, that shows the largest Left Ventricle cavity. 
+            Reply exactly as: EDV=<int>.
+
+            Output requirements: 
+            Use only indices 0 and 1.
+            Output exactly one line. Output format must be exactly: EDV=<int>
+            Do not output any explanations, extra words, or a second line.
+
+
+interleave_esv:
+  conversation:
+    - role: system
+      content:
+        - type: text
+          text: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: text
+          text: |
+            You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is 1.
+            The order of the frames is arbitrary and does NOT indicate which one is EDV or ESV. 
+            Exactly one frame is EDV (largest Left Ventricle cavity) and the other is ESV (smallest Left Ventricle cavity). 
+            Only use these 2 frames. 
+            Decide which frame is ESV, that shows the smallest Left Ventricle cavity. 
+            Reply exactly as: ESV=<int>.
+
+            Output requirements: 
+            Use only indices 0 and 1.
+            Output exactly one line. Output format must be exactly: ESV=<int>
+            Do not output any explanations, extra words, or a second line.
+
+
+gemma_esv:
+  conversation:
+    - role: system
+      content: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is 1.
+            The order of the frames is arbitrary and does NOT indicate which one is EDV or ESV. 
+            Exactly one frame is EDV (largest Left Ventricle cavity) and the other is ESV (smallest Left Ventricle cavity). 
+            Only use these 2 frames. 
+            Decide which frame is ESV, that shows the smallest Left Ventricle cavity. 
+            Reply exactly as: ESV=<int>.
+
+            Output requirements: 
+            Use only indices 0 and 1.
+            Output exactly one line. Output format must be exactly: ESV=<int>
+            Do not output any explanations, extra words, or a second line.
+
+gemma_edv:
+  conversation:
+    - role: system
+      content: "You are a senior radiologist. Analyze only the provided ultrasound video frames."
+
+    - role: user
+      content:
+        - type: video
+        - type: text
+          text: |
+            You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is 1.
+            The order of the frames is arbitrary and does NOT indicate which one is EDV or ESV. 
+            Exactly one frame is EDV (largest Left Ventricle cavity) and the other is ESV (smallest Left Ventricle cavity). 
+            Only use these 2 frames. 
+            Decide which frame is EDV, that shows the largest Left Ventricle cavity. 
+            Reply exactly as: EDV=<int>.
+
+            Output requirements: 
+            Use only indices 0 and 1.
+            Output exactly one line. Output format must be exactly: EDV=<int>
+            Do not output any explanations, extra words, or a second line.
+
+
+qwen_edv:
+  - role: system
+    content:
+      - type: text
+        text: >
+          You are a senior cardiologist specialized in echocardiography.
+          Analyze only the provided ultrasound frames.
+          Think silently and do not reveal your reasoning.
+  - role: user
+    content:
+      - type: text
+        text: >
+          You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is 1.
+          The order of the frames is arbitrary and does NOT indicate which one is EDV or ESV.
+          Exactly one frame is EDV (largest Left Ventricle cavity) and the other one is ESV (smallest Left Ventricle cavity).
+          Only use these 2 frames.
+          Decide which frame is EDV, that has the largest Left Ventricle cavity.
+          Reply exactly as: EDV=<int>.
+
+          Output requirements:
+           - Use only indices 0 and 1.
+           - Output exactly one line.
+           - Output format must be exactly: EDV=<int>
+           - Do not output any explanations, extra words, or a second line.
+      - type: image
+      - type: image
+
+qwen_esv:
+  - role: system
+    content:
+      - type: text
+        text: >
+          You are a senior cardiologist specialized in echocardiography.
+          Analyze only the provided ultrasound frames.
+          Think silently and do not reveal your reasoning.
+  - role: user
+    content:
+      - type: text
+        text: >
+          You are given exactly 2 frames from the same apical four-chamber echocardiogram. The first frame has index 0 and the second one is1.
+          The order of the frames is arbitrary and does NOT indicate which one is EDV or ESV.
+          Exactly one frame is EDV (largest Left Ventricle cavity) and the other one is ESV (smallest Left Ventricle cavity).
+          Only use these 2 frames.
+          Decide which frame is ESV, that has the smallest Left Ventricle cavity.
+          Reply exactly as: ESV=<int>.
+
+          Output requirements:
+           - Use only indices 0 and 1.
+           - Output exactly one line.
+           - Output format must be exactly: ESV=<int>
+           - Do not output any explanations, extra words, or a second line.
+      - type: image
+      - type: image
+
