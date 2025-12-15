@@ -24,7 +24,7 @@ and compare them against Monte Carlo random baselines.
 examples/   # Examples of raw result JSON files and images
 prompts/    # Prompts used in benchmark
 src/        # Scripts for running models and evaluations
-scripts/    # Codes for result visualization and metrics caluculation
+scripts/    # Codes for annotation file generation, Monte Carlo baseline calculation and metrics caluculation/visualization.
 ```
 ---
 
@@ -51,8 +51,11 @@ conda activate <ENV_NAME>
 1. Request access and download the dataset from: https://echonet.github.io/dynamic/
 2. (If you want segmented version) Run segmentation using: https://github.com/echonet/dynamic.git
 
+### 4.2 Annotation file generation
 
-### 4.2 Run the benchmark
+See in scripts/annotation_generation.ipynb
+
+### 4.3 Run the benchmark
 
 Example command:
 
@@ -71,7 +74,7 @@ python run_gemma-3n.py \
 
 ## 5. Metrics and plots generation
 
-TBA
+See in scripts/metrics.ipynb
 
 ---
 
