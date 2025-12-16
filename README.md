@@ -3,7 +3,8 @@
 
 This repository contains the code for our work:
 
->**Can Vision-Language Models Track a Heartbeat? A Benchmark on Frame-Level Echocardiogram Understanding** \
+>**Can Vision-Language Models Track a Heartbeat? \
+>A Benchmark on Frame-Level Echocardiogram Understanding** \
 > **MIDL 2026 (under review)**   
 > **Dingming Liu et al.** 
 
