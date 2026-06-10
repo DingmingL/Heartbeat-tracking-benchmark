@@ -5,7 +5,7 @@ This repository contains the code for our work:
 
 >**Can Vision-Language Models Track a Heartbeat? \
 >A Benchmark on Frame-Level Echocardiogram Understanding** \
-> **MIDL 2026 (under review)**   
+> **Accepted by MIDL 2026**   
 > **Dingming Liu et al.** 
 
 ---
